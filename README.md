@@ -14,15 +14,15 @@
 
 2. But before heading towards the task we have to build our workspace so using Dockerfile we will build our workspace in our Windows, Linux or Mac. It is may be inside VM.
 
-* *Job1 : This job will continuously monitor github and as soon as found any commit it will fetch all the content in that repository and will store in the workSpace.
+* Job1 : This job will continuously monitor github and as soon as found any commit it will fetch all the content in that repository and will store in the workSpace.
 
-* *Job2 : This job will identify whether the uploaded files are of HTML or PHP and accordingly it will react to launch server of corresponding language. Ex. If code is of PHP, then jenkins should start the container that has PHP already installed.
+* Job2 : This job will identify whether the uploaded files are of HTML or PHP and accordingly it will react to launch server of corresponding language. Ex. If code is of PHP, then jenkins should start the container that has PHP already installed.
 
-* *Job3 : We will use this job for testing our application. This job will fail itself on failure of website. Which will help to trigger next job.
+* Job3 : We will use this job for testing our application. This job will fail itself on failure of website. Which will help to trigger next job.
 
-* *Job4 : If third job failed due to any reason it means that our website is also crashed so in this scenario we should notify our developer. So we will use python script in this job to sent email to the developer.
+* Job4 : If third job failed due to any reason it means that our website is also crashed so in this scenario we should notify our developer. So we will use python script in this job to sent email to the developer.
 
-* *Job5 : It is not the part of chained jobs, This will a monitoring job which will see whether our workspace is doing well or not if found it failing it will immediately launch a new container with the same configuration.
+* Job5 : It is not the part of chained jobs, This will a monitoring job which will see whether our workspace is doing well or not if found it failing it will immediately launch a new container with the same configuration.
 
 ## So lets get started . . .
 
@@ -69,54 +69,46 @@
 
 * Lets move towards Jobs now :
 
-# Job1 :
-As I mentioned earlier we have to use this job for fetching data from github. So whenever developer commits this job should trigger so I have used poll SCM which will monitor the github after every one minute.
+## Job1 :
 
-No alt text provided for this image
-No alt text provided for this image
-No alt text provided for this image
-First part of this execute shell is for futher task I will explain in it later in this article. But in the last three lines I have copied all the content from github and pasted it here my workSpace.
+* As I mentioned earlier we have to use this job for fetching data from github. So whenever developer commits this job should trigger so I have used poll SCM which will monitor the github after every one minute.
 
-# Job2 : `This job is the most important part of this project as it is going to launch the server this job is so intelligent that it automatically finds whether the webapp is written in HTML or PHP if developer provide HTML code it will launch HTML server and if provided PHP it will launch PHP server.
+* First part of this execute shell is for futher task I will explain in it later in this article. But in the last three lines I have copied all the content from github and pasted it here my workSpace.
 
-For this task rather than using precreated images from dockerhub I have built my own image using docker file.
+## Job2 : 
 
-No alt text provided for this image
-No alt text provided for this image
-These are the scripts for both the Dockerfiles. After creating these dockerfiles we have to configure our job.
+* This job is the most important part of this project as it is going to launch the server this job is so intelligent that it automatically finds whether the webapp is written in HTML or PHP if developer provide HTML code it will launch HTML server and if provided PHP it will launch PHP server.
 
-No alt text provided for this image
-No alt text provided for this image
-In this script jenkins will search for html and php extensions in that folder to identify the language of code and then accordingly use docker images. I have an example here
+* For this task rather than using precreated images from dockerhub I have built my own image using docker file.
 
-No alt text provided for this image
-Here my html_product os which I have built for production department is launched.
+* These are the scripts for both the Dockerfiles. After creating these dockerfiles we have to configure our job.
 
-So in the first job I have used first block in order to stop the container before deploying code inorder to avoid any kind of conflicts. I faced issue that if my container is on and if I pushed new content my site failes so I just remove the connection so client will not feel much glitch but in that 2 to 5 seconds an updated version will is provided.
+* In this script jenkins will search for html and php extensions in that folder to identify the language of code and then accordingly use docker images. I have an example here
 
-Job3 :
+* Here my html_product os which I have built for production department is launched.
 
-This job will run our code on the machine and see whether it is working properly of\or not if not it will automatically fails itself so that it can trigger the notication job.
+* So in the first job I have used first block in order to stop the container before deploying code inorder to avoid any kind of conflicts. I faced issue that if my container is on and if I pushed new content my site failes so I just remove the connection so client will not feel much glitch but in that 2 to 5 seconds an updated version will is provided.
 
-No alt text provided for this image
-Here I have used status environmental variable for testing.
+## Job3 :
 
-Job4 :
+* This job will run our code on the machine and see whether it is working properly of\or not if not it will automatically fails itself so that it can trigger the notication job.
 
-This is basically a notifier which will share the status of container to the developer it is triggered on failure of job3. Failure of job3 concludes that our website is not properly deployed. For notifications I have used email service here. Python provides facility to send mails using script so I have used it here,
+* Here I have used status environmental variable for testing.
 
-No alt text provided for this image
-I have also provided github link you can use it for reference.
+## Job4 :
 
-So finally my chain of jobs is ready and I have automated everything and also included notification feature using python.
+* This is basically a notifier which will share the status of container to the developer it is triggered on failure of job3. Failure of job3 concludes that our website is not properly deployed. For notifications I have used email service here. Python provides facility to send mails using script so I have used it here,
 
-We can visualize it using build pipeline.
+* I have also provided github link you can use it for reference.
 
-No alt text provided for this image
-We have done such a huge infrastructure many advanced things but point is, what if due to any reason our workSpace fails or collaps. We will loose everything in a moment, so inorder to relaunch the infrastructure on failure, I have made one job here so It will also automated.
+* So finally my chain of jobs is ready and I have automated everything and also included notification feature using python.
 
-No alt text provided for this image
-Using this script I will relaunch whole infrastructure again and this completed my project. So the final list view looks like this
+* We can visualize it using build pipeline.
 
-No alt text provided for this image
-This is all about this project here I have tried to automate everything and this fullfills one great industrial use case.
+
+#### We have done such a huge infrastructure many advanced things but point is, what if due to any reason our workSpace fails or collaps. We will loose everything in a moment, so inorder to relaunch the infrastructure on failure, I have made one job here so It will also automated.
+
+
+* Using this script I will relaunch whole infrastructure again and this completed my project. So the final list view looks like this
+
+* This is all about this project here I have tried to automate everything and this fullfills one great industrial use case.
