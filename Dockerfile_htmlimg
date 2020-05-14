@@ -1,0 +1,9 @@
+FROM centos
+
+RUN yum install -y sudo
+
+RUN yum install -y net-tools
+
+RUN yum install -y httpd
+
+RUN echo -e "/usr/sbin/httpd" >> /etc/bashrc
