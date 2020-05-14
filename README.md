@@ -30,6 +30,8 @@
 
 * In this dockerfile I have installed softwares that I am going to use in this complete project.
 
+[Click here to see dockerfile](https://github.com/ajinkya48765/DevOps-Automation-Project-2/blob/master/Dockerfile_baseos)
+
  `RUN echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers`
 
 * This command is used, so that our jenkins server will get sudo powers in order to modify content.
@@ -76,6 +78,10 @@
 * First part of this execute shell is for futher task I will explain in it later in this article. But in the last three lines I have copied all the content from github and pasted it here my workSpace.
 
 ## Job2 : 
+
+[Click here for HTML Dockerfile](https://github.com/ajinkya48765/DevOps-Automation-Project-2/blob/master/Dockerfile_htmlimg)
+
+[Click here for PHP Dockerfile](https://github.com/ajinkya48765/DevOps-Automation-Project-2/blob/master/Dockerfile_phpimg)
 
 * This job is the most important part of this project as it is going to launch the server this job is so intelligent that it automatically finds whether the webapp is written in HTML or PHP if developer provide HTML code it will launch HTML server and if provided PHP it will launch PHP server.
 
